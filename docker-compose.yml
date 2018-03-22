@@ -1,0 +1,16 @@
+version: "2"
+services:
+  eval-service:
+    build: eval-service
+    command: python eval-service.py
+    ports:
+     - "5000:5000"
+    volumes:
+     - ./eval-service:/code
+  defined-service:
+    build: defined-service
+    command: npm start
+    ports:
+     - "8090:8080"
+    volumes: 
+      - ./defined-service/app:/app

@@ -9,7 +9,7 @@ var methodOverride = require('method-override');
 // configuration ===========================================
 
 // set our port
-var port = process.env.PORT || 8090;
+var port = process.env.PORT || 8080;
 
 // connect to our mongoDB database 
 // (uncomment after you enter in your own credentials in config/db.js)

@@ -1,6 +1,9 @@
 {
   "name": "defined-service",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "express": "~4.5.1",
     "body-parser": "~1.4.2",
