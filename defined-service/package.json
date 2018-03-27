@@ -5,8 +5,10 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "~4.5.1",
     "body-parser": "~1.4.2",
-    "method-override": "~2.0.2"
+    "express": "~4.5.1",
+    "jaeger-client": "^3.10.0",
+    "method-override": "~2.0.2",
+    "opentracing": "^0.14.1"
   }
 }

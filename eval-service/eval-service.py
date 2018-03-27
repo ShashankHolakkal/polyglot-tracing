@@ -1,7 +1,12 @@
 from flask import Flask,jsonify,request
 
+from tracing import init_tracer
+from opentracing.ext import tags
+from opentracing.propagation import Format
+
 app = Flask(__name__)
 
+tracer = init_tracer('eval-service')
 
 evalresults = [
     {
@@ -29,8 +34,15 @@ def get_evalresults():
 @app.route('/api/evalresults', methods=['POST'])
 def eval_results():
 
-    defined = request.json['defined']
-    actual = request.json['actual']
+    span_ctx = tracer.extract(Format.HTTP_HEADERS, request.headers)
+    span_tags = {tags.SPAN_KIND: tags.SPAN_KIND_RPC_SERVER}
+
+    with tracer.start_span('eval-results', child_of=span_ctx, tags=span_tags) as span:
+        defined = request.json['defined']
+        actual = request.json['actual']
+        span.log_kv({'event': 'defined', 'value': defined})
+        span.log_kv({'event': 'actual', 'value': actual})
+
     return jsonify({'evalresults': evalresults}), 200
 
 if __name__ == '__main__':
