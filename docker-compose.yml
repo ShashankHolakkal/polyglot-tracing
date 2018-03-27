@@ -11,6 +11,16 @@ services:
     build: defined-service
     command: npm start
     ports:
-     - "8090:8080"
+     - "8080:8080"
     volumes: 
-      - ./defined-service/app:/app
+     - ./defined-service/code:/code
+  jaeger:
+    image: jaegertracing/all-in-one:0.8.0
+    ports:
+     - "5775:5775"
+     - "6381:6381"
+     - "6382:6382"
+     - "5778:5778"
+     - "16686:16686"
+     - "14268:14268"
+     - "9411:9411"
