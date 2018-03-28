@@ -17,28 +17,23 @@ use Rack::Tracer
 # view one
 get '/' do
 
-  actualUri = URI.parse("http://actual:8080/")
-
-  # Shortcut
-  # actualResponse = Net::HTTP.get_response(actualUri)
-
-  # return actualResponse.body
-
-  # definitionUri = URI.parse("http://localhost:8090/api/definition")
-
-  # Shortcut
-  # definitionResponse = Net::HTTP.get_response(definitionUri)
-
-  # return actualResponse.body << definitionResponse.body
-
-  puts 'In here.'
-
-  client = Net::HTTP.new(actualUri.host,actualUri.port)
-  req = Net::HTTP::Get.new(actualUri.request_uri)
   span = OpenTracing.start_span('client span')
-  OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, req)
-  puts client.request(req).body
+
+  # invoke to get actual version
+  actualUri = URI.parse("http://actual:8080/")
+  actualClient = Net::HTTP.new(actualUri.host,actualUri.port)
+  actualReq = Net::HTTP::Get.new(actualUri.request_uri)
+  OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, actualReq)
+  actualResponse = actualClient.request(actualReq).body
+
+  # invoke to get definition version
+  definitionUri = URI.parse("http://defined-service:9090/api/definition")
+  definitionClient = Net::HTTP.new(definitionUri.host,definitionUri.port)
+  definitionReq = Net::HTTP::Get.new(definitionUri.request_uri)
+  OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, definitionReq)
+  definitionResponse = definitionClient.request(definitionReq).body
+
+  return actualResponse << definitionResponse
   span.finish
   # return actualResponse
 end
-

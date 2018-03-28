@@ -25,7 +25,7 @@ services:
     build: defined-service
     command: npm start
     ports:
-     - "9090:8080"
+     - "9090:9090"
     volumes: 
      - ./defined-service/:/app
   jaeger:
