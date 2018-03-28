@@ -7,11 +7,12 @@ require 'opentracing'
 require 'jaeger/client'
 require 'rack/tracer'
 
+# Listen on all interfaces in the development environment
+set :bind, '0.0.0.0'
+
 OpenTracing.global_tracer = Jaeger::Client.build(host: 'jaeger', port: 6831, service_name: 'client')
 
 use Rack::Tracer
-
-
 
 # view one
 get '/' do
