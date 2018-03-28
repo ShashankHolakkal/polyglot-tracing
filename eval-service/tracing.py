@@ -7,10 +7,15 @@ def init_tracer(service):
     logging.basicConfig(format='%(message)s', level=logging.DEBUG)
 
     config = Config(
-        config={ # usually read from some yaml config
+        config={
+            # usually read from some yaml config
             'sampler': {
                 'type': 'const',
                 'param': 1,
+            },
+            'local_agent': {
+                'reporting_host': "jaeger",
+                'reporting_port': 5775,
             },
             'logging': True,
             'reporter_batch_size': 1,

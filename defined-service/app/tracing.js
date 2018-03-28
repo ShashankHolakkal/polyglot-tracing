@@ -8,13 +8,13 @@ function initTracer(serviceName) {
     var config = {
         'serviceName': serviceName,
         'sampler': {
-            'host': 'jaeger',
-            'port': 6831,
             'type': 'const',
             'param': 1
         },
         'reporter': {
-            'logSpans': true
+            'logSpans': true,
+             'agentHost': 'jaeger',
+             'agentPort': 6832
         }
     };
     var options = {
