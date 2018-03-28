@@ -7,7 +7,7 @@ require 'opentracing'
 require 'jaeger/client'
 require 'rack/tracer'
 
-OpenTracing.global_tracer = Jaeger::Client.build(service_name: 'client')
+OpenTracing.global_tracer = Jaeger::Client.build(host: 'jaeger', port: 6831, service_name: 'client')
 
 use Rack::Tracer
 
@@ -16,7 +16,7 @@ use Rack::Tracer
 # view one
 get '/' do
 
-  actualUri = URI.parse("http://localhost:8080/")
+  actualUri = URI.parse("http://actual:8080/")
 
   # Shortcut
   # actualResponse = Net::HTTP.get_response(actualUri)
