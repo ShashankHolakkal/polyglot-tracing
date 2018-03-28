@@ -16,7 +16,7 @@ use Rack::Tracer
 # view one
 get '/' do
 
-  # actualUri = URI.parse("http://localhost:8080/")
+  actualUri = URI.parse("http://localhost:8080/")
 
   # Shortcut
   # actualResponse = Net::HTTP.get_response(actualUri)
@@ -32,11 +32,11 @@ get '/' do
 
   puts 'In here.'
 
-  client = Net::HTTP.new("localhost",8080)
-  req = Net::HTTP::Get.new("/")
+  client = Net::HTTP.new(actualUri.host,actualUri.port)
+  req = Net::HTTP::Get.new(actualUri.request_uri)
   span = OpenTracing.start_span('client span')
   OpenTracing.inject(span.context, OpenTracing::FORMAT_RACK, req)
-  client.request(req).body
+  puts client.request(req).body
   span.finish
   # return actualResponse
 end

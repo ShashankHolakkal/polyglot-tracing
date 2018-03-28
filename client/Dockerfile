@@ -10,4 +10,6 @@ RUN bundle install
 
 ADD . /usr/src/app/
 
+
 CMD ["/usr/src/app/lib/client.rb"]
+#docker run -dt -p 4567:4567 client bash

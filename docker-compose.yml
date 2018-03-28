@@ -1,5 +1,19 @@
 version: "2"
 services:
+  client:
+    build: client
+    command: ruby lib/client.rb
+    ports:
+     - "4567:4567"
+    volumes:
+     - ./client:/usr/src/app
+  actual:
+    build: actual
+    command: java -jar /lib/java-tracing-1.0-SNAPSHOT.jar
+    ports:
+     - "8080:8080"
+    volumes:
+     - ./actual:/actual
   eval-service:
     build: eval-service
     command: python eval-service.py
@@ -11,7 +25,7 @@ services:
     build: defined-service
     command: npm start
     ports:
-     - "8080:8080"
+     - "9090:8080"
     volumes: 
      - ./defined-service/:/app
   jaeger:

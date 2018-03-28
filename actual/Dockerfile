@@ -2,9 +2,9 @@
 FROM openjdk:8-jre-alpine
 
 # Set the work directory
-WORKDIR /io/actual/
+WORKDIR /actual/
 
-COPY target/java-tracing-1.0-SNAPSHOT.jar ./lib/java-tracing-1.0-SNAPSHOT.jar
+COPY target/java-tracing-1.0-SNAPSHOT.jar /lib/java-tracing-1.0-SNAPSHOT.jar
 
 #ENTRYPOINT ["java", "-jar", "./lib/java-tracing-1.0-SNAPSHOT.jar"]
 
